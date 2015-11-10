@@ -1,5 +1,5 @@
 # matteo
-<img align="right" src="http://saltandlighttv.org/blog/wp-content/uploads/2012/01/Matteo-Ricci.jpg">
+<img align="right" src="http://saltandlighttv.org/blog/wp-content/uploads/2012/01/Matteo-Ricci.jpg" width="320">
 
 A simple-to-use script that performs query searches on an English-Chinese Catholic Dictionary.
 
