@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div.container {
+    width: 100%;
+    border: 1px solid gray;
+}
+
+header.big_header,footer.big_footer {
+    padding: 1em;
+    clear: left;
+    color: white;
+    background-color: black;
+    text-align: center;
+}
+div.dict_sel {
+    float: left;
+    max-width: 300px;
+    margin: 0;
+    padding: 1em;
+}
+div.crit_sel {
+    float: left;
+    max-width: 160px;
+    padding: 1em;
+    overflow: hidden;
+}
+button.search_btn {
+    position: absolute;
+    top: 180px;
+    left: 340px;
+}
+table,td {
+    border: 1px solid black;
+    padding: 0.5em;
+}
+div.dict_result {
+    padding: 1em;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Banner image -->
+<img src="img/banner.png" style="width:729px;height:90px;">
+<div>
+    <form action="handle_form" method="post">
+        <div style="height:60px"> 
+            MATTEO is a lightweight, client-side English-Chinese Catholic dictionary. Servant of God Matteo Ricci, pray for us!<br>
+            西泰辭典是個輕量，客戶端英漢天主教辭典；天主之僕利瑪竇（號西泰國），為我等祈！<br>
+        </div>
+        <div class="container" style="height:300px">
+            <!-- Search box -->
+            <header class="big_header">
+                <label for="t_query" style="width:120px;float:left">Search MATTEO:</label>
+                <input type="text" id="t_query" name="query" style="width:150px;margin-left:20px;float:left"><br>
+                <button class="search_btn" type="submit">Submit</button>
+            </header>
+            
+            <!-- Dictionary selection -->
+            <div class="dict_sel">
+                <label>Select dictionaries:</label>
+                <ul>
+                    <input type="checkbox" name="dicts" value="Catholic English-Chinese Miniature Dictionary" checked="checked"> Catholic English-Chinese Miniature Dictionary<br>
+                    <input type="checkbox" name="dicts" value="Catholic English-Chinese Miniature Dictionary (comma-reordered)" checked="checked"> Catholic English-Chinese Miniature Dictionary (comma-reordered)<br>
+                </ul>
+            </div>
+            <!-- Criteria selection -->
+            <div class="crit_sel">
+                <label>Select search criteria:</label>
+                <ul>
+                    <input type="checkbox" name="crits" value="Crit 1" checked="checked"> Criterion 1<br>
+                    <input type="checkbox" name="crits" value="Crit 2" checked="checked"> Criterion 2<br>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Footer -->
+<footer>MATTEO English-Chinese Catholic Dictionary, 2016</footer>
+</body>
+</html>
