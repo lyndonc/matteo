@@ -31,5 +31,5 @@ if __name__ == '__main__':
                     'tools.staticdir.dir': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'img')
                 }
             }
-    print conf
+    print "===Welcome to MATTEO! You may go to http://localhost:8080 in your browser now==="
     cherrypy.quickstart(MatteoWrapper(), '/', conf)
