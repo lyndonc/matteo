@@ -3,9 +3,9 @@ import sqlite3
 def dict_to_sqlite(dict,is_reordered):
     # Connect to SQLite DB
     if is_reordered:
-        db_path = r'C:\Users\lyndonc\Documents\Hobby Projects\Matteo\v3\db\saint_names_girl.db'
+        db_path = r'C:\Users\lyndonc\Documents\Hobby Projects\Matteo\v3\db\church_docs.db'
     else:
-        db_path = r'C:\Users\lyndonc\Documents\Hobby Projects\Matteo\v3\db\saint_names_girl.db'
+        db_path = r'C:\Users\lyndonc\Documents\Hobby Projects\Matteo\v3\db\church_docs.db'
     conn_db = sqlite3.connect(db_path)
     cursor = conn_db.cursor()
     
@@ -37,9 +37,9 @@ def main():
     is_reordered = 0    # 0: use non-reordered dict, 1: use reordered dict
     num_delim = 2
     if is_reordered:
-        dict_path = r'C:\Users\lyndonc\Documents\Hobby Projects\Matteo\v3\dict\saint_names_girl.csv'
+        dict_path = r'C:\Users\lyndonc\Documents\Hobby Projects\Matteo\v3\dict\church_docs.csv'
     else:
-        dict_path = r'C:\Users\lyndonc\Documents\Hobby Projects\Matteo\v3\dict\saint_names_girl.csv'
+        dict_path = r'C:\Users\lyndonc\Documents\Hobby Projects\Matteo\v3\dict\church_docs.csv'
     with open(dict_path,'r') as dict_f:
         for row in dict_f:
             print row
