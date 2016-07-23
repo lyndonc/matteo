@@ -3,26 +3,26 @@
 
 import sqlite3
 from dict_info import dict_directory
+from crit_info import crit_directory
     
-def search_sqlite_query(dbpath,query):
+def search_sqlite_query(dbpath,query,crit,search_str):
     # Connect to SQLite DB
     conn_db = sqlite3.connect(dbpath)
     cursor = conn_db.cursor()
-    # SELECT matches for query
-    search_str = "SELECT * FROM dictionary WHERE Term LIKE '%" + query + "%'"
-    cursor.execute(search_str)
+    # SELECT matches for query for each search criterion
+    match_entries = []
+    cursor.execute(search_str.replace('<placeholder>',query))
     
     # Fetch data one by one
-    match_entries = []
     while True:
         row = cursor.fetchone()
         if row == None:
             break
         match_entries.append(row)
-    print 'Found %d matching entries in the dictionary for your query' % (len(match_entries))
+    print 'Found %d matching entries in the dictionary at the database "%s" for your query for your search criterion "%s"' % (len(match_entries),dbpath,crit)
     return match_entries
     
-def save_sqlite_matches(match_entries,res_html,query):
+def fmt_sqlite_matches(match_entries,res_html,query):
     # Writing your matching SQLite entries to result html
     for match_entry in match_entries:
         res_html += """\
@@ -71,7 +71,12 @@ def run_matteo(query,req_dicts,req_crits):      # NOTE: MATTEO 2 will support on
     assert(type(req_dicts) in [unicode,list])
     if type(req_dicts) == unicode:
         req_dicts = [req_dicts]
-        
+    # - Assert crits not empty
+    assert(type(req_crits) in [unicode,list])
+    if type(req_crits) == unicode:
+        req_crits = [req_crits]
+    if not req_crits:
+        return 'Error: No search criteria selected. Press BACK to re-enter.'
     # Display the search bar
     homepage_html_path = 'html\\home_dyn.html'
     res_html = open(homepage_html_path,'r').read()
@@ -90,11 +95,16 @@ def run_matteo(query,req_dicts,req_crits):      # NOTE: MATTEO 2 will support on
         if dict_name_en not in req_dicts:
             continue
         # -- Get matches and save
-        match_entries = search_sqlite_query(dict_path,query)
+        match_entries = []
+        for dict_i,(crit_name,search_str) in crit_directory.items():
+            # --- Ignore if criterion not supported
+            if crit_name not in req_crits:
+                continue
+            match_entries += search_sqlite_query(dict_path,query,crit_name,search_str)
         # -- Write dictionary result headers
         res_html = write_res_headers(res_html,dict_name_en,dict_name_zh,len(match_entries))
         if match_entries:
-            res_html = save_sqlite_matches(match_entries,res_html,query)
+            res_html = fmt_sqlite_matches(match_entries,res_html,query)
         dict_i += 1
     # Add a no results notice if no results found
     if res_html == old_res_html:

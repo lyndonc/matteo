@@ -9,9 +9,21 @@ class MatteoWrapper(object):
         return cherrypy.session['home_html']
 
     @cherrypy.expose
-    def handle_form(self, dicts, crits, query):
-        cherrypy.session['query'] = query
-        return back_end.run_matteo(cherrypy.session['query'],dicts,crits)
+    def handle_form(self, **params):
+        # Check for valid inputs
+        # - query (empty query is accepted for now - it is a request to display all terms)
+        query = params['query']
+        # - dicts (empty dicts not accepted)
+        try:
+            dicts = params['dicts']
+        except KeyError:
+            return 'Error: You did not specify any dictionaries to search. Go back to home page to search again.'
+        # - crits (empty crits not accepted)
+        try:
+            crits = params['crits']
+        except KeyError:
+            return 'Error: You did not specify any search criteria. Go back to home page to search again.'
+        return back_end.run_matteo(query,dicts,crits)
 
     @cherrypy.expose
     def display(self):
