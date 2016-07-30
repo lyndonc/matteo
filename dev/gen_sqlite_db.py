@@ -1,11 +1,11 @@
-import sqlite3
+import sqlite3,sys
 
-def dict_to_sqlite(dict,is_reordered):
+def dict_to_sqlite(dict,is_reordered,dict_name):
     # Connect to SQLite DB
     if is_reordered:
-        db_path = r'C:\Users\lyndonc\Documents\Hobby Projects\Matteo\v3\db\church_docs.db'
+        db_path = r'C:\Users\lyndonc\Documents\Hobby Projects\Matteo\v3\db' + '\\' + dict_name + '.db'
     else:
-        db_path = r'C:\Users\lyndonc\Documents\Hobby Projects\Matteo\v3\db\church_docs.db'
+        db_path = r'C:\Users\lyndonc\Documents\Hobby Projects\Matteo\v3\db' + '\\' + dict_name + '.db'
     conn_db = sqlite3.connect(db_path)
     cursor = conn_db.cursor()
     
@@ -32,21 +32,22 @@ def dict_to_sqlite(dict,is_reordered):
     conn_db.commit()
 
 def main():
+    dict_name = sys.argv[1]
     # Import dictionary
     dict = {}
     is_reordered = 0    # 0: use non-reordered dict, 1: use reordered dict
     num_delim = 2
     if is_reordered:
-        dict_path = r'C:\Users\lyndonc\Documents\Hobby Projects\Matteo\v3\dict\church_docs.csv'
+        dict_path = r'C:\Users\lyndonc\Documents\Hobby Projects\Matteo\v3\dict' + '\\' + dict_name + '.csv'
     else:
-        dict_path = r'C:\Users\lyndonc\Documents\Hobby Projects\Matteo\v3\dict\church_docs.csv'
+        dict_path = r'C:\Users\lyndonc\Documents\Hobby Projects\Matteo\v3\dict' + '\\' + dict_name + '.csv'
     with open(dict_path,'r') as dict_f:
         for row in dict_f:
             print row
             assert(len(row.split('\t')) == num_delim)
             key = row.split('\t')[0].decode('utf-8')
             dict[key] = row.split('\t')[-1].replace('\n','').decode('utf-8')
-    dict_to_sqlite(dict,is_reordered)
+    dict_to_sqlite(dict,is_reordered,dict_name)
     
 if __name__ == '__main__':
     main()
